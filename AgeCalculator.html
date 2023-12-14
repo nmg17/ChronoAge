@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chronological Age Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+
+        label, input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Chronological Age Calculator</h1>
+    <form id="ageCalculatorForm">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob"><br><br>
+
+        <label for="evaluationDate">Date of Test Administration:</label>
+        <input type="date" id="evaluationDate"><br><br>
+
+        <button type="button" onclick="calculateAge()">Calculate Age</button>
+        <button type="button" onclick="clearForm()">Clear</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateAge() {
+            var dob = document.getElementById('dob').value;
+            var evaluationDate = document.getElementById('evaluationDate').value;
+
+            if (!dob || !evaluationDate) {
+                alert("Please enter both dates.");
+                return;
+            }
+
+            dob = new Date(dob);
+            evaluationDate = new Date(evaluationDate);
+
+            if (dob >= evaluationDate) {
+                alert("The date of birth must be before the date of test administration.");
+                return;
+            }
+
+            var age = new Date(evaluationDate - dob);
+            var years = age.getUTCFullYear() - 1970; // because the date is calculated from 1970
+            var months = age.getUTCMonth();
+            var days = age.getUTCDate();
+
+            document.getElementById('result').innerHTML = 
+                'Age at Test Administration: ' + years + ' Years, ' + months + ' Months, ' + days + ' Days';
+        }
+
+        function clearForm() {
+            document.getElementById('ageCalculatorForm').reset();
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
